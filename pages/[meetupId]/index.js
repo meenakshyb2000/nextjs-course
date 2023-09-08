@@ -33,7 +33,7 @@ export async function getStaticPaths() {
   const meetups = await meetupCollection.find({}, {projection: { _id: 1 }}).toArray(); // 1st arg empty brackets=> give all objects. otherwise can give some filters 2nd arg => fetch all ids but nothing else(1)
   client.close();
   return {
-    fallback: false,
+    fallback: true, //true/blocking => for new meetups  that werent pregenerated, next will pregenerate when needed
     paths: meetups.map((meetup) => ({
       params: { meetupId: meetup._id.toString() },
     })),
